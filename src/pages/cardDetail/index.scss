@@ -123,6 +123,11 @@
   color: #666;
 
   .skill {
+    margin-bottom: 24px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
 
     .basic-skill {
       display: flex;

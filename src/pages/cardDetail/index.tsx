@@ -145,7 +145,7 @@ class CardDetail extends Component<IProps> {
             </View>
             {/* 技能 */}
             <View className="skill-list">
-              {card.card_skills.map((res: Card_skills, index: number) => {
+              {card.card_skills && card.card_skills.map((res: Card_skills, index: number) => {
                 return (
                   <View className="skill">
                     <View className="basic-skill">

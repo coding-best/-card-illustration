@@ -97,7 +97,7 @@ class Index extends Component<IProps> {
                         <Text className="name">{res.card_name}</Text>
                       </View>
                       <View className="type-list">
-                        {res.card_skills.map((res: Card_skills, index: number) => {
+                        {res.card_skills && res.card_skills.map((res: Card_skills, index: number) => {
                           return (
                             <View className="capsule type-poison">{res.skill_name}</View>
                           )
