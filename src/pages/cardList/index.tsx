@@ -6,7 +6,7 @@ import { RootState } from "../../core/reducers"
 import { ThunkDispatch } from "redux-thunk"
 import { AnyAction } from "redux"
 import { getPokemonRank } from "../../core/actions/home"
-import { Card } from "../../core/typescript/cards"
+import { Card, Card_skills } from "../../core/typescript/cards"
 
 import "./index.scss"
 
@@ -97,14 +97,11 @@ class Index extends Component<IProps> {
                         <Text className="name">{res.card_name}</Text>
                       </View>
                       <View className="type-list">
-                        <View className="capsule type-poison">
-                          {res.skill_one_name}
-                        </View>
-                        {res.skill_two_name && (
-                          <View className="capsule type-poison">
-                            {res.skill_two_name}
-                          </View>
-                        )}
+                        {res.card_skills.map((res: Card_skills, index: number) => {
+                          return (
+                            <View className="capsule type-poison">{res.skill_name}</View>
+                          )
+                        })}
                       </View>
                     </View>
                     <View className="picture">

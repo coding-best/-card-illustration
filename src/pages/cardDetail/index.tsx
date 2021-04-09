@@ -6,7 +6,7 @@ import { RootState } from "../../core/reducers"
 import { ThunkDispatch } from "redux-thunk"
 import { AnyAction } from "redux"
 import "./index.scss"
-import { Card } from "../../core/typescript/cards"
+import { Card, Card_skills } from "../../core/typescript/cards"
 import { getPokemon } from "../../core/actions/home"
 
 type StateProps = {
@@ -34,24 +34,26 @@ interface CardDetail {
 }
 
 const defaultCard = {
-  id: 0,
-  status: 0,
+  id: 1,
   card_style: '',
   card_image_url: '',
   card_name: '',
-  card_description: '',
+  card_attr: '',
+  card_icon: '',
+  card_type: '',
+  card_label: '',
   card_hp: '',
-  skill_one_name: '',
-  skill_one_cost: '',
-  skill_one_damage: '',
-  skill_one_effect: '',
-  skill_two_name: '',
-  skill_two_cost: '',
-  skill_two_damage: '',
-  skill_two_effect: '',
+  card_skills: [
+    {
+      skill_name: '',
+      skill_cost: '',
+      skill_damage: '',
+      skill_effect: '',
+    },
+  ],
   card_attr_weakness: '',
   card_attr_resistance: '',
-  card_attr_retreat: '',
+  card_attr_retreat: ''
 }
 
 class CardDetail extends Component<IProps> {
@@ -60,7 +62,7 @@ class CardDetail extends Component<IProps> {
     prevCard: defaultCard,
     nextCard: defaultCard,
     id: 0,
-    scrollTop: 0
+    scrollTop: 0,
   }
 
   async componentDidMount() {
@@ -71,15 +73,21 @@ class CardDetail extends Component<IProps> {
   // 初始化宝可梦信息
   async init(id: number) {
     // 如果在状态里边找不到，则请求单个接口获取详情
-    const curr = this.props.cards.find(res => res.id === id) || await this.props.getPokemon(id)
-    const prev = this.props.cards.find(res => res.id === id - 1) || await this.props.getPokemon(id - 1)
-    const next = this.props.cards.find(res => res.id === id + 1) || await this.props.getPokemon(id + 1)
+    const curr =
+      this.props.cards.find((res) => res.id === id) ||
+      (await this.props.getPokemon(id))
+    const prev =
+      this.props.cards.find((res) => res.id === id - 1) ||
+      (await this.props.getPokemon(id - 1))
+    const next =
+      this.props.cards.find((res) => res.id === id + 1) ||
+      (await this.props.getPokemon(id + 1))
     this.setState({
       currentCard: curr,
       prevCard: prev,
       nextCard: next,
       id: id,
-      scrollTop: Math.random()
+      scrollTop: Math.random(),
     })
   }
 
@@ -94,7 +102,12 @@ class CardDetail extends Component<IProps> {
   }
 
   render() {
-    const { currentCard: card, prevCard: prev, nextCard: next, scrollTop } = this.state
+    const {
+      currentCard: card,
+      prevCard: prev,
+      nextCard: next,
+      scrollTop,
+    } = this.state
     return (
       <View className="index">
         <ScrollView
@@ -113,22 +126,17 @@ class CardDetail extends Component<IProps> {
               <View className="name">{card.card_name}</View>
             </View>
             <View className="attribute">
-              {card.skill_one_cost.split(" ").map((res) => {
-                return <View className={`energy ${res}`}></View>
-              })}
+              <View className={`energy ${card.card_attr}`}></View>
             </View>
           </View>
           <View className="section card-cover">
-              <Image
-                src={card.card_image_url}
-                mode="aspectFit"
-              ></Image>
-            </View>
+            <Image src={card.card_image_url} mode="aspectFit"></Image>
+          </View>
           <View className="detail">
             {/* 基本类型 */}
             <View className="basic-info">
               <View className="left">
-                <Text>{card.card_description}</Text>
+                <Text>{card.card_type}</Text>
               </View>
               <View className="right">
                 <Text>HP</Text>
@@ -137,20 +145,26 @@ class CardDetail extends Component<IProps> {
             </View>
             {/* 技能 */}
             <View className="skill-list">
-              <View className="skill">
-                <View className="basic-skill">
-                  <View className="left">
-                    {card.skill_one_cost.split(" ").map((res) => {
-                      return <View className={`energy ${res}`}></View>
-                    })}
-                    <Text>{card.skill_one_name}</Text>
+              {card.card_skills.map((res: Card_skills, index: number) => {
+                return (
+                  <View className="skill">
+                    <View className="basic-skill">
+                      <View className="left">
+                        {res.skill_cost.split(" ").map((res) => {
+                          return <View className={`energy ${res}`}></View>
+                        })}
+                        <Text>{card.card_name}</Text>
+                      </View>
+                      <View className="right">
+                        <Text>{res.skill_damage}</Text>
+                      </View>
+                    </View>
+                    {res.skill_effect && (
+                      <Text className="effect">{res.skill_effect}</Text>
+                    )}
                   </View>
-                  <View className="right">
-                    <Text>{card.skill_one_damage}</Text>
-                  </View>
-                </View>
-                {card.skill_one_effect && <Text className="effect">{card.skill_one_effect}</Text>}
-              </View>
+                )
+              })}
             </View>
             {/* 弱点 */}
             <View className="weakness">
@@ -161,7 +175,11 @@ class CardDetail extends Component<IProps> {
               </View>
               <View className="content">
                 <View className="weak-item">
-                  <View className={`energy ${card.card_attr_weakness.split(" ")[0]}}`}></View>
+                  <View
+                    className={`energy ${
+                      card.card_attr_weakness.split(" ")[0]
+                    }}`}
+                  ></View>
                   <Text>{card.card_attr_weakness.split(" ")[1]}</Text>
                 </View>
                 <View className="weak-item">{card.card_attr_resistance}</View>
@@ -175,14 +193,22 @@ class CardDetail extends Component<IProps> {
             {/* 附近的宝可梦 */}
             <View className="section pokemons">
               <View className="paginations">
-                {prev && <View className="previous" onClick={this.toPrev.bind(this)}>
-                  <View className="iconfont icon icon-left"></View>
-                  <View className="avatar"><Image src={prev.card_image_url} mode="aspectFit" /></View>
-                </View>}
-                {next && <View  className="next" onClick={this.toNext.bind(this)}>
-                  <View className="avatar"><Image src={next.card_image_url} mode="aspectFit" /></View>
-                  <View className="iconfont icon icon-right"></View>
-                </View>}
+                {prev && (
+                  <View className="previous" onClick={this.toPrev.bind(this)}>
+                    <View className="iconfont icon icon-left"></View>
+                    <View className="avatar">
+                      <Image src={prev.card_image_url} mode="aspectFit" />
+                    </View>
+                  </View>
+                )}
+                {next && (
+                  <View className="next" onClick={this.toNext.bind(this)}>
+                    <View className="avatar">
+                      <Image src={next.card_image_url} mode="aspectFit" />
+                    </View>
+                    <View className="iconfont icon icon-right"></View>
+                  </View>
+                )}
               </View>
             </View>
           </View>
@@ -194,11 +220,13 @@ class CardDetail extends Component<IProps> {
 
 function mapStateToProps(state: RootState): StateProps {
   return {
-    cards: state.HomeReducer.pokemonRank
+    cards: state.HomeReducer.pokemonRank,
   }
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<RootState, null, AnyAction>): DispatchProps => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<RootState, null, AnyAction>
+): DispatchProps => {
   return {
     getPokemon: (id) => {
       return dispatch(getPokemon(id))
