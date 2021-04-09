@@ -8,16 +8,16 @@ const BASR_URL = 'http://49.234.106.77:8080'
 /**
  * @获取Pokemon
  * */
-export function getPokemon() {
+export function getPokemon(id: number) {
   return async (dispatch: ThunkDispatch<RootState, null, AnyAction>, getState: () => RootState) => {
     try {
-      const response = await Taro.request({ url: BASR_URL + '/pokemon/get?id=1' })
+      const response = await Taro.request({ url: BASR_URL + `/pokemon/get?id=${id}` })
 
       dispatch(getPokemonSuccess({
         pokemon: response.data
       }))
 
-      return response
+      return response.data.card
     } catch (error) {
       console.log('请求错误：', error)
     }
@@ -45,10 +45,11 @@ export function getPokemonRank(page, pageSize) {
   return async (dispatch: ThunkDispatch<RootState, null, AnyAction>, getState: () => RootState) => {
     try {
       const id = (page - 1) * pageSize + 1
+      const rank = getState().HomeReducer.pokemonRank
       const response = await Taro.request({ url: BASR_URL + `/pokemon/get_range?id=${id}&limit=${pageSize}` })
 
       dispatch(getPokemonRankSuccess({
-        pokemonRank: response.data
+        pokemonRank: rank.concat(response.data.cards)
       }))
 
       return response

@@ -1,18 +1,15 @@
 import Taro from '@tarojs/taro'
 import { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { RootState } from '../../core/reducers'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { getPokemon } from '../../core/actions/home'
 import './index.scss'
 
 type StateProps = {}
 
-type DispatchProps = {
-  getPokemon(): any
-}
+type DispatchProps = {}
 
 type PageOwnProps = {}
 
@@ -23,9 +20,6 @@ interface Template {
 }
 
 class Template extends Component<IProps> {
-  async componentDidMount() {
-    await this.props.getPokemon()
-  }
 
   render () {
     return (
@@ -42,11 +36,7 @@ function mapStateToProps(state: RootState): StateProps {
 
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<RootState, null, AnyAction>): DispatchProps => {
-  return {
-    getPokemon: () => {
-      return dispatch(getPokemon())
-    },
-  }
+  return {}
 }
 
 
