@@ -9,28 +9,8 @@
     display: flex;
     justify-content: space-between;
     padding: 48px;
-    border-left: 32px solid rgba(204, 204, 204, 0.5);
+    border-left: 32px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
-
-    &.color-red {
-      border-left-color: $color-red;
-    }
-
-    &.color-blue {
-      border-left-color: $color-blue;
-    }
-
-    &.color-yellow {
-      border-left-color: $color-yellow;
-    }
-
-    &.color-gray {
-      border-left-color: $color-gray;
-    }
-
-    &.color-grass {
-      border-left-color: $color-grass;
-    }
 
     &:nth-child(2n) {
       background-color: rgb(242, 227, 197);
@@ -53,7 +33,7 @@
     .information {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
 
       .title {
         font-size: 28px;
@@ -75,6 +55,7 @@
 
       .type-list {
         display: flex;
+        margin-top: 30px;
 
         .type {
           margin-right: 16px;
@@ -88,7 +69,7 @@
       .avatar,
       .sprite {
         width: 96px;
-        height: 96px;
+        height: 126px;
         border: 4px solid #fff;
         border-radius: 16px;
 
@@ -190,4 +171,90 @@
 
 .scrollview {
   height: 100vh;
+}
+
+.filter-button, .top-button {
+  background: hsl(0, 0%, 95%);
+  color: hsl(0, 0%, 55%);
+  height: 72px;
+  padding: 0 1em;
+  line-height: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid hsl(0, 0%, 75%);
+  border-radius: 16px;
+  box-shadow: 0 8px 0 hsl(0, 0%, 75%), 0 16px 0 rgba(0, 0, 0, 0.25), 0 0 24px 4px rgba(0, 0, 0, 0.1);
+  font-size: 28px;
+  margin: 0 16px 32px;
+  text-decoration: none;
+
+  &:active,
+  &.hover {
+    background: hsl(0, 0%, 90%);
+  }
+}
+
+.filter-button {
+  position: fixed;
+  bottom: 48px;
+  right: 40px;
+}
+
+.top-button {
+  position: fixed;
+  bottom: 48px;
+  right: 160px;
+  opacity: 0;
+}
+
+//进场前的瞬间
+.toolbar-botton {
+  position: fixed;
+  bottom: 48px;
+  right: 40px;
+}
+.toolbar-botton-enter,
+.toolbar-botton-appear {
+  opacity: 0;
+  transform: translateY(20%);
+}
+
+//进场过程中
+.toolbar-botton-enter-active,
+.toolbar-botton-appear-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all .4s ease;
+}
+
+//进场之后
+.toolbar-botton-enter-done {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+//离开前的瞬间
+.toolbar-botton-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+//离开过程中
+.toolbar-botton-exit-active {
+  opacity: 0;
+  transform: translateY(20%);
+  transition: all .4s ease;
+}
+
+//离开后
+.toolbar-botton-exit-done {
+  opacity: 0;
+  transform: translateY(20%);
+}
+
+.filter-button-test {
+  position: fixed;
+  bottom: 200px;
+  right: 200px;
 }

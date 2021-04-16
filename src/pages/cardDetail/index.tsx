@@ -8,6 +8,7 @@ import { AnyAction } from "redux"
 import "./index.scss"
 import { Card, Card_skills } from "../../core/typescript/cards"
 import { getPokemon } from "../../core/actions/home"
+import Attribute from '../../components/attribute'
 
 type StateProps = {
   cards: Card[]
@@ -118,15 +119,15 @@ class CardDetail extends Component<IProps> {
           enableBackToTop={true}
         >
           <View className="header">
-            <View className="avatar">
+            {/* <View className="avatar">
               <Image src="" />
-            </View>
+            </View> */}
             <View className="title">
               <View className="id">No.{card.id}</View>
               <View className="name">{card.card_name}</View>
             </View>
             <View className="attribute">
-              <View className={`energy ${card.card_attr}`}></View>
+              <Attribute attr={card.card_attr}></Attribute>
             </View>
           </View>
           <View className="section card-cover">
@@ -151,7 +152,7 @@ class CardDetail extends Component<IProps> {
                     <View className="basic-skill">
                       <View className="left">
                         {res.skill_cost.split(" ").map((res) => {
-                          return <View className={`energy ${res}`}></View>
+                          return <Attribute attr={res}></Attribute>
                         })}
                         <Text>{card.card_name}</Text>
                       </View>
@@ -175,17 +176,16 @@ class CardDetail extends Component<IProps> {
               </View>
               <View className="content">
                 <View className="weak-item">
-                  <View
-                    className={`energy ${
-                      card.card_attr_weakness.split(" ")[0]
-                    }}`}
-                  ></View>
+                  <Attribute attr={card.card_attr_weakness.split(" ")[0]}></Attribute>
                   <Text>{card.card_attr_weakness.split(" ")[1]}</Text>
                 </View>
-                <View className="weak-item">{card.card_attr_resistance}</View>
+                <View className="weak-item">
+                  <Attribute attr={card.card_attr_resistance.split(" ")[0]}></Attribute>
+                  <Text>{card.card_attr_resistance.split(" ")[1]}</Text>
+                </View>
                 <View className="weak-item">
                   {card.card_attr_retreat.split(" ").map((res) => {
-                    return <View className={`energy ${res}`}></View>
+                    return <Attribute attr={res}></Attribute>
                   })}
                 </View>
               </View>

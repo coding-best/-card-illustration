@@ -1,0 +1,244 @@
+@import '../../stylesheet/colors';
+
+.filters {
+  position: fixed;
+  z-index: -1;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+
+  .panel {
+    position: absolute;
+    background-color: hsla(0, 0%, 95%, 0.95);
+    width: 100%;
+    min-height: 600px;
+    max-height: 88%;
+    overflow-y: scroll;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    padding: 72px 48px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 64px 8px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    .h2 {
+      font-size: 48px;
+      font-weight: normal;
+      color: #333;
+      margin: 0 0 48px;
+      line-height: 2em;
+      text-transform: capitalize;
+
+      .icon {
+        font-size: 48px;
+      }
+
+      .close {
+        float: right;
+        padding-left: 32px;
+        cursor: pointer;
+      }
+    }
+
+    .filter {
+      margin-top: 48px;
+      padding-top: 48px;
+      box-shadow: 0 -2px 0 0 #ddd, 0 2px 0 0 #fff inset;
+    }
+
+    .h3 {
+      margin: 0 0 2em;
+      font-weight: normal;
+      font-size: 36px;
+      color: #333;
+      text-transform: capitalize;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: left;
+
+
+      .option-attr {
+        margin: 20px 36px;
+      }
+
+
+      .option {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        color: #fff;
+        border: 4px solid #fff;
+        border-radius: 16px;
+        text-transform: capitalize;
+        background-color: hsl(30, 8%, 55%);
+        box-shadow: 0 2px 0 #fff, 0 4px 0 rgba(0, 0, 0, 0.1);
+        margin: 8px;
+        cursor: pointer;
+
+        .check {
+          border-radius: 50%;
+          background-color: #fff;
+          border: 4px solid #666;
+          display: inline-block;
+          font-size: 20px;
+          width: 24px;
+          height: 24px;
+          margin-right: 4px;
+          line-height: 20px;
+          text-align: center;
+
+          &.is-checked {
+            border-color: #333;
+          }
+
+          .icon {
+            color: #333;
+            font-size: 16px;
+          }
+        }
+
+        &.color-red {
+          background-color: $color-red;
+        }
+
+        &.color-blue {
+          background-color: $color-blue;
+        }
+
+        &.color-yellow {
+          background-color: $color-yellow;
+        }
+
+        &.color-gray {
+          background-color: $color-gray;
+        }
+
+        &.type-grass {
+          background-color: $type-grass;
+        }
+
+        &.type-electric {
+          background-color: $type-electric;
+        }
+
+        &.type-poison {
+          background-color: $type-poison;
+        }
+
+        &.type-fire {
+          background-color: $type-fire;
+        }
+
+        &.type-flying {
+          background-color: $type-flying;
+        }
+
+        &.type-water {
+          background-color: $type-water;
+        }
+
+        &.type-bug {
+          background-color: $type-bug;
+        }
+
+        &.type-normal {
+          background-color: $type-normal;
+        }
+
+        &.type-ground {
+          background-color: $type-ground;
+        }
+
+        &.type-fairy {
+          background-color: $type-fairy;
+        }
+
+        &.type-fighting {
+          background-color: $type-fighting;
+        }
+
+        &.type-psychic {
+          background-color: $type-psychic;
+        }
+
+        &.type-rock {
+          background-color: $type-rock;
+        }
+
+        &.type-steel {
+          background-color: $type-steel;
+        }
+
+        &.type-ice {
+          background-color: $type-ice;
+        }
+
+        &.type-ghost {
+          background-color: $type-ghost;
+        }
+
+        &.type-dragon {
+          background-color: $type-dragon;
+        }
+      }
+    }
+  }
+}
+
+.filter-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+//进场前的瞬间
+.filter-panel-enter,
+.filter-panel-appear {
+  opacity: 0;
+  z-index: 99;
+}
+
+//进场过程中
+.filter-panel-enter-active,
+.filter-panel-appear-active {
+  opacity: 1;
+  transition: all .2s ease;
+}
+
+//进场之后
+.filter-panel-enter-done {
+  opacity: 1;
+  z-index: 99;
+}
+
+//离开前的瞬间
+.filter-panel-exit {
+  opacity: 1;
+  z-index: -1;
+}
+
+//离开过程中
+.filter-panel-exit-active {
+  opacity: 0;
+  transition: all .2s ease;
+}
+
+//离开后
+.filter-panel-exit-done {
+  opacity: 0;
+  z-index: -1;
+}
