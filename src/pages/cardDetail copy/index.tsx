@@ -26,7 +26,6 @@ type State = {
   nextCard: Card
   id: number
   scrollTop: number
-  content: Array<any>
 }
 
 type IProps = StateProps & DispatchProps & PageOwnProps
@@ -65,7 +64,6 @@ class CardDetail extends Component<IProps> {
     nextCard: defaultCard,
     id: 0,
     scrollTop: 0,
-    content: []
   }
 
   async componentDidMount() {
@@ -105,7 +103,12 @@ class CardDetail extends Component<IProps> {
   }
 
   render() {
-    const { currentCard: card, prevCard: prev, nextCard: next, scrollTop} = this.state
+    const {
+      currentCard: card,
+      prevCard: prev,
+      nextCard: next,
+      scrollTop,
+    } = this.state
     return (
       <View className="index">
         <ScrollView
@@ -115,25 +118,33 @@ class CardDetail extends Component<IProps> {
           scrollWithAnimation
           enableBackToTop={true}
         >
+          <View className="header">
+            {/* <View className="avatar">
+              <Image src="" />
+            </View> */}
+            <View className="title">
+              <View className="id">No.{card.id}</View>
+              <View className="name">{card.card_name}</View>
+            </View>
+            <View className="attribute">
+              <Attribute attr={card.card_attr}></Attribute>
+            </View>
+          </View>
           <View className="section card-cover">
             <Image src={card.card_image_url} mode="aspectFit"></Image>
           </View>
-          <View className="content">
-            <View className="item">
-              <Text>类型</Text>
-              <Text>{card.card_type}</Text>
-            </View>
-            <View className="item">
-              <Text>属性</Text>
-              <Attribute attr={card.card_attr}></Attribute>
-            </View>
-            <View className="item">
-              <Text>血量</Text>
+          <View className="detail">
+            {/* 基本类型 */}
+            <View className="basic-info">
+              <View className="left">
+                <Text>{card.card_type}</Text>
+              </View>
               <View className="right">
                 <Text>HP</Text>
                 <Text>{card.card_hp}</Text>
               </View>
             </View>
+            {/* 技能 */}
             <View className="skill-list">
               {card.card_skills && card.card_skills.map((res: Card_skills, index: number) => {
                 return (
@@ -156,34 +167,29 @@ class CardDetail extends Component<IProps> {
                 )
               })}
             </View>
-            <View className="item">
-              <Text>弱点</Text>
-              <View className="weak-item">
-                <Attribute attr={card.card_attr_weakness.split(" ")[0]}></Attribute>
-                <Text>{card.card_attr_weakness.split(" ")[1]}</Text>
+            {/* 弱点 */}
+            <View className="weakness">
+              <View className="title">
+                <Text>弱点</Text>
+                <Text>抗性</Text>
+                <Text>撤退</Text>
+              </View>
+              <View className="content">
+                <View className="weak-item">
+                  <Attribute attr={card.card_attr_weakness.split(" ")[0]}></Attribute>
+                  <Text>{card.card_attr_weakness.split(" ")[1]}</Text>
+                </View>
+                <View className="weak-item">
+                  <Attribute attr={card.card_attr_resistance.split(" ")[0]}></Attribute>
+                  <Text>{card.card_attr_resistance.split(" ")[1]}</Text>
+                </View>
+                <View className="weak-item">
+                  {card.card_attr_retreat.split(" ").map((res) => {
+                    return <Attribute attr={res}></Attribute>
+                  })}
+                </View>
               </View>
             </View>
-            <View className="item">
-              <Text>抗性</Text>
-              <View className="weak-item">
-                <Attribute attr={card.card_attr_resistance.split(" ")[0]}></Attribute>
-                <Text>{card.card_attr_resistance.split(" ")[1]}</Text>
-              </View>
-            </View>
-            <View className="item">
-              <Text>撤退</Text>
-              <View className="weak-item">
-                {card.card_attr_retreat.split(" ").map((res) => {
-                  return <Attribute attr={res}></Attribute>
-                })}
-              </View>
-            </View>
-            <View className="item">
-              <Text>已拥有</Text>
-            </View>
-          </View>
-
-          <View className="detail">
             {/* 附近的宝可梦 */}
             <View className="section pokemons">
               <View className="paginations">
