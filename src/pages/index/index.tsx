@@ -6,7 +6,7 @@ import { RootState } from '../../core/reducers'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import './index.scss'
-import { getPokemonRank, getPokemonFilter } from "../../core/actions/home"
+import { wxLogin, getPokemonRank, getPokemonFilter } from "../../core/actions/home"
 import { Card, Card_skills } from '../../core/typescript/cards'
 import { isEqual } from '../../plugins/deepEqual'
 import Drawer from '../../components/Drawer/index'
@@ -20,6 +20,7 @@ type StateProps = {
 type DispatchProps = {
   getPokemonRank(page: number, pageSize: number): any
   getPokemonFilter(): any
+  wxLogin(): void
 }
 type PageOwnProps = {}
 
@@ -51,6 +52,8 @@ class Index extends Component<IProps> {
 
 
   async componentDidMount() {
+    await this.props.wxLogin()
+
     await this.props.getPokemonRank(this.state.page, this.state.limit)
     await this.props.getPokemonFilter()
   }
@@ -168,6 +171,9 @@ function mapStateToProps(state: RootState): StateProps {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<RootState, null, AnyAction>): DispatchProps => {
   return {
+    wxLogin: () => {
+      return dispatch(wxLogin())
+    },
     getPokemonRank: (page, pageSize) => {
       return dispatch(getPokemonRank(page, pageSize))
     },

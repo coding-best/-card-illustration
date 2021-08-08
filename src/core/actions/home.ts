@@ -4,7 +4,79 @@ import {AnyAction} from 'redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {createAction} from 'redux-actions'
 
-const BASR_URL = 'http://49.234.106.77:8080'
+const BASR_URL = 'https://minicards.xyz'
+
+/**
+ * @微信登录
+ * */
+export function wxLogin() {
+  return async (dispatch: ThunkDispatch<RootState, null, AnyAction>, getState: () => RootState) => {
+    try {
+      const res = await Taro.login()
+      console.log(res)
+      const response = await Taro.request({
+        url: BASR_URL + `/user/wx_login`,
+        method: 'POST',
+        data: {
+          code: res.code
+        }
+      })
+
+      Taro.setStorageSync('token', response.data.result.data.token)
+    } catch (error) {
+      console.log('请求错误：', error)
+    }
+  }
+}
+
+/**
+ * @获取用户信息
+ * */
+export function authLogin(e) {
+  return async (dispatch: ThunkDispatch<RootState, null, AnyAction>, getState: () => RootState) => {
+    try {
+      const token = Taro.getStorageSync('token')
+      const response = await Taro.request({
+        url: BASR_URL + `/user/auth_login`,
+        method: 'POST',
+        header: { token },
+        data: { 
+          EncryptedData: e.encryptedData,
+          iv: e.iv
+        }
+      })
+
+
+      Taro.setStorageSync('userInfo', response.data.result.data.user_info)
+    } catch (error) {
+      console.log('请求错误：', error)
+    }
+  }
+}
+
+/**
+ * @获取用户手机号
+ * */
+export function authPhone(e) {
+  return async (dispatch: ThunkDispatch<RootState, null, AnyAction>, getState: () => RootState) => {
+    try {
+      const token = Taro.getStorageSync('token')
+      const response = await Taro.request({
+        url: BASR_URL + `/user/auth_phone`,
+        method: 'POST',
+        header: { token },
+        data: { 
+          EncryptedData: e.encryptedData,
+          iv: e.iv
+        }
+      })
+      Taro.setStorageSync('mobile', response.data.result.data)
+    } catch (error) {
+      console.log('请求错误：', error)
+    }
+  }
+}
+
 /**
  * @获取Pokemon
  * */
@@ -68,7 +140,7 @@ export function getPokemonRank(page, pageSize) {
       const response = await Taro.request({ url: BASR_URL + url })
 
       dispatch(getPokemonRankSuccess({
-        pokemonRank: rank.concat(response.data.cards)
+        pokemonRank: rank.concat(response.data.result.data.cards)
       }))
 
       return response

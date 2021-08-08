@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "cardIllustration",
   "description": "卡牌图鉴",
-  "appid": "wxba08c85f24399bf2",
+  "appid": "wxa1d6307673e43c5e",
   "setting": {
     "urlCheck": false,
     "es6": true,
@@ -23,6 +23,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -36,8 +37,7 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "useApiHostProcess": true
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "simulatorType": "wechat",

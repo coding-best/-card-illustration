@@ -1,0 +1,34 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "卡片列表",
+          "pathName": "pages/cardList/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "卡片详情",
+          "pathName": "pages/cardDetail/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/index",
+          "pathName": "pages/my/index",
+          "scene": null
+        }
+      ]
+    }
+  }
+}
