@@ -4,7 +4,7 @@
   "description": "卡牌图鉴",
   "appid": "wxa1d6307673e43c5e",
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": false,
     "postcss": false,

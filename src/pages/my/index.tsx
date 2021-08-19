@@ -35,18 +35,22 @@ class My extends Component<IProps> {
     userInfo: Taro.getStorageSync('userInfo')
   }
 
+  // 获取手机号
   async getPhoneNumber(e) {
     console.log(e.target)
+    // 调用手机号接口
     await this.props.authPhone(e.target)
     this.setState({
       visible: false
     })
   }
 
+  // 获取用户信息
   async getUserInfo() {
     const e = await Taro.getUserProfile({
       desc: '用于完善资料'
     })
+    // 调用用户信息接口
     await this.props.authLogin(e)
     this.setState({
       userInfo: Taro.getStorageSync('userInfo'),

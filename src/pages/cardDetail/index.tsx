@@ -68,6 +68,7 @@ class CardDetail extends Component<IProps> {
     content: []
   }
 
+  // 页面加载完毕
   async componentDidMount() {
     const id = Number(getCurrentInstance().router?.params.id)
     this.init(id)
@@ -94,11 +95,13 @@ class CardDetail extends Component<IProps> {
     })
   }
 
+  // 上一个宝可梦
   toPrev() {
     const id = this.state.id - 1
     this.init(id)
   }
 
+  // 下一个宝可梦
   toNext() {
     const id = this.state.id + 1
     this.init(id)

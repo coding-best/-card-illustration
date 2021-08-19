@@ -50,15 +50,18 @@ class Index extends Component<IProps> {
     scrollCurr: 0
   }
 
-
+  // 页面加载完毕
   async componentDidMount() {
+    // 登录接口请求
     await this.props.wxLogin()
-
+    // 宝可梦列表请求
     await this.props.getPokemonRank(this.state.page, this.state.limit)
+    // 筛选方式请求
     await this.props.getPokemonFilter()
   }
 
   componentWillReceiveProps(next) {
+    // 筛选过后，页面回到顶部
     if (!isEqual(next.filter, this.props.filter)) {
       this.setState({
         page: 1,
@@ -67,6 +70,7 @@ class Index extends Component<IProps> {
     }
   }
 
+  // 监听滚动
   bindScroll(e) {
     this.setState({
       isFiltersButton: e.detail.deltaY > 0,
@@ -74,12 +78,14 @@ class Index extends Component<IProps> {
     })
   }
 
+  // 跳转到卡牌详情
   toCardDetail(id: number) {
     Taro.navigateTo({
       url: `../cardDetail/index?id=${id}`,
     })
   }
 
+  // 上拉加载更多
   async onScrollToLower() {
     Taro.showLoading({
       title: '加载中~',
@@ -103,18 +109,19 @@ class Index extends Component<IProps> {
     }
   }
 
+  // 打开筛选弹框
   onSwitchFilter(e) {
     this.setState({
       isFilters: !this.state.isFilters
     })
   }
 
+  // 滚动到顶部
   scrollToTop() {
     this.setState({
       scrollTop: Math.random()
     })
   }
-
 
   render () {
     const { cards } = this.props
@@ -122,7 +129,9 @@ class Index extends Component<IProps> {
 
     return (
       <View className='index-page'>
+        {/* 筛选组件 */}
         <Drawer></Drawer>
+        {/* 宝可梦列表 */}
         <View className="pokemon-list">
           <ScrollView
             className="scrollview"

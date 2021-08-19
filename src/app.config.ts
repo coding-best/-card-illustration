@@ -5,6 +5,7 @@ export default {
     "pages/myCard/index",
     "pages/cardList/index",
     "pages/cardDetail/index",
+    "pages/demo/index",
   ],
   window: {
     backgroundTextStyle: "light",

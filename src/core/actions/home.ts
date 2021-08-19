@@ -4,7 +4,7 @@ import {AnyAction} from 'redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {createAction} from 'redux-actions'
 
-const BASR_URL = 'https://minicards.xyz'
+const BASR_URL = 'https://www.minicards.xyz/api'
 
 /**
  * @微信登录
